@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import Sortable from "./Sortable.vue";
-import { computed, ref } from "vue";
 import type { SortableOptions } from "sortablejs";
 import type { AutoScrollOptions } from "sortablejs/plugins";
+import { computed, ref } from "vue";
+import Sortable from "./Sortable.vue";
 
 const elements = computed(() => {
   return [
@@ -230,12 +230,12 @@ main {
         @clone="logEvent"
         ref="sortable"
       >
-        <template #item="{ element, index }">
-          <div class="draggable" :key="element.id" @click="logClick">
-            {{ element.text }}
+        <template #item="{ item, i }">
+          <div class="draggable" :key="item.id" @click="logClick">
+            {{ item.text }}
             <Sortable
-              v-if="element.children"
-              :list="element.children"
+              v-if="item.children"
+              :list="item.children"
               :item-key="(item) => item.id"
               :options="options"
               @change="logEvent"
@@ -251,9 +251,9 @@ main {
               @move="logEvent"
               @clone="logEvent"
             >
-              <template #item="{ element, index }">
-                <div class="draggable" :key="element.id">
-                  {{ element.text }}
+              <template #item="{ item, i }">
+                <div class="draggable" :key="item.id">
+                  {{ item.text }}
                 </div>
               </template>
             </Sortable>

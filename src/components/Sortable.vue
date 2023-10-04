@@ -27,6 +27,7 @@ type ExposedProps = {
 
 const props = defineProps({
   /** All SortableJS options are supported; events are handled by the `defineEmits` below and should be used with v-on */
+  /** 23.10.4.1 */
   options: {
     type: Object as PropType<SortableOptionsProp>,
     default: null,
