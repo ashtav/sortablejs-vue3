@@ -167,8 +167,6 @@ onUnmounted(() => {
   </div>
 </template>
 
-
-
 <style>
 .slide-enter-active,
 .slide-leave-active {
