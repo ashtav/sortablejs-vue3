@@ -78,8 +78,26 @@ const remove = (id: any) => {
           {{ item.title }} <a href="#" @click="remove(item.id)">Remove</a>
         </li>
       </template>
-
     </Sortable>
+
+    <table border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <Sortable v-model="items" item-key="table" tag="tbody" :options="options">
+        <template #item="{ item, i }">
+          <tr :key="item.id">
+            <td width="20">{{ i }}</td>
+            <td>{{ item.title }}</td>
+            <td> <a href="#" @click="remove(item.id)">Remove</a> </td>
+          </tr>
+        </template>
+      </Sortable>
+    </table>
   </div>
 </template>
 

@@ -105,7 +105,7 @@ watch(containerRef, (newDraggable) => {
   // console.log(containerRef.value?.lastChild, newDraggable)
 
   if (newDraggable) {
-    sortable.value = new Sortable(containerRef.value?.lastChild as any, {
+    sortable.value = new Sortable(newDraggable as any, {
       ...props.options,
       onChoose: (event) => emit("choose", event),
       onUnchoose: (event) => emit("unchoose", event),
@@ -131,7 +131,10 @@ watch(containerRef, (newDraggable) => {
       // See https://github.com/MaxLeiter/sortablejs-vue3/pull/56 for context on `attrs`.
       onMove: (event, originalEvent) => "onMoveCapture" in attrs ? (<(event: Sortable.MoveEvent, originalEvent: Event) => void>attrs.onMoveCapture)(event, originalEvent) : emit("move", event, originalEvent),
       onClone: (event) => emit("clone", event),
-      onChange: (event) => emit("change", event),
+      onChange: (event) => {
+        emit("change", event)
+        // rearrange(event.oldIndex, event.newIndex);
+      },
     });
   }
 });
@@ -160,11 +163,11 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="containerRef">
-    <TransitionGroup name="slide" :tag="$props.tag" :class="$props.class">
+  <component ref="containerRef" :is="$props.tag" :class="$props.class">
+    <TransitionGroup name="slide">
       <slot v-for="(item, index) of modelValue" :key="getKey(item)" :item="item" :i="index" name="item"></slot>
     </TransitionGroup>
-  </div>
+  </component>
 </template>
 
 <style>
